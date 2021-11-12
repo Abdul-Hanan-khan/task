@@ -37,22 +37,3 @@ class MyApp extends StatelessWidget {
 
 
 
-Future<List<ProductModel>>  getAllProducts(String get_items, String category_id, String last_item) async{
-  final String apiUrl = "https://lushbybeenish.pk/whatsinit/whatsinit.php";
-
-  final response = await http.post(apiUrl, body: {
-    "get_items": get_items,
-    "category_id": category_id,
-    "last_item": last_item,
-  });
-
-  if(response.statusCode == 200){
-    final String responseString = response.body;
-    print("printing response $responseString");
-
-    return productModelFromJson(responseString);
-  }else{
-    print("/////////////////////////////////////////////error");
-    return null;
-  }
-}

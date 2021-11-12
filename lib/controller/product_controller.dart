@@ -6,6 +6,7 @@ import 'package:task/service/service.dart';
 class ProductController extends GetxController{
 
   var isloading=true.obs;
+  RxInt pageNumber=1.obs;
   var product =List<ProductModel>().obs;
   updateProducts(String last_item) {
     Services.getAllProducts(last_item).then((value) {

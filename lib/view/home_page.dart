@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    controller.updateProducts('1');
+    controller.updateProducts('${controller.pageNumber.value}');
 
     super.initState();
   }
@@ -41,7 +41,14 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Obx((){
-           return Text('Now of items ${controller.product.length}');
+           return Row(
+             mainAxisSize: MainAxisSize.max,
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: [
+               Text('Now of items ${controller.product.length}'),
+               Text('Page # ${controller.pageNumber}'),
+             ],
+           );
           }),
         ),
         body: Column(
@@ -85,15 +92,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 //   padding: const EdgeInsets.only(top: 200),
                 //   child: CircularProgressIndicator(),
                 // )),
-            Center(
-                child: RaisedButton(
-              child: Text("Load More"),
-              onPressed: () {
-               controller.isloading.value=true;
-               controller.updateProducts('1');
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-              },
-            ))
+              children: [
+                RaisedButton(
+                  child: const Text("Prev page"),
+                  onPressed: () {
+
+                   if(controller.pageNumber.value == 1){
+
+                   }else
+                     {
+                       controller.isloading.value=true;
+                       controller.pageNumber.value --;
+                       controller.updateProducts('${controller.pageNumber.value}');
+                     }
+
+
+                  },
+                )
+                ,RaisedButton(
+                  child: Text("Load More"),
+                  onPressed: () {
+                   controller.isloading.value=true;
+                   controller.pageNumber.value ++;
+                   controller.updateProducts('${controller.pageNumber.value}');
+
+                  },
+                ),
+              ],
+            )
           ],
         ),
       ),
